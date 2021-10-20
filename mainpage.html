@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- FAVICON WEB-->
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <!-- FUENTES GOOGLE IDIOMAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/f80991af51.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mainpage.css">
+    <title>Importar</title>
+</head>
+
+<body>
+    <div class="wrap-wrapper">
+        <div class="wrapper">
+            <div class="sidebar">
+                <div style="border: 1px solid #000; border-radius: 20px;">
+                    <h2> <span class="sidebarTitle"> Oscar On <br> <br>
+                            <img
+                                src="https://lh3.googleusercontent.com/a-/AOh14GjiUcxEg-LYaIQ8ol9ldCoxiHKoJgRUXYR3Z-WqbA=s96-c">
+                            </i></span></h2><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-box">
+        <div class="page-chart0" style="position: relative; width:45%">
+            <canvas id="charting1" class="chartosR">
+            </canvas>
+            <script>
+                chartIt();
+                const ytemps1 = [];
+                const xlabels1 = [];
+                async function chartIt() {
+                    await getData();
+                    const ctx1 = document.getElementById('charting1').getContext('2d');
+                    const myChart1 = new Chart(ctx1, {
+                        type: 'pie',
+                        data: {
+                            labels: xlabels1,
+                            datasets: [{
+                                label: 'Ingresos',
+                                data: ytemps1,
+                                backgroundColor: [
+                                    'rgba(50, 50, 100)',
+                                    'rgba(45, 50, 150)',
+                                    'rgba(10, 40, 200)',
+                                    'rgba(0, 50, 250)',
+                                    'rgba(255, 0, 0)',
+                                    'rgba(200, 49, 41)',
+                                    'rgba(150, 50, 20)',
+                                    'rgba(59, 31, 12)',
+                                ],
+                                hoverOffset: 20,
+                                borderColor: [
+                                    '#cacaca',
+                                ],
+                                borderWidth: 2
+                            }],
+                            options: {
+                                responsive: false,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        },
+                    });
+                }
+                async function getData() {
+                    const response = await fetch('datasheet1.csv');
+                    const data = await response.text();
+
+                    const table = data.split('\n').slice(1);
+                    table.forEach(row => {
+                        const columns1 = row.split(',');
+                        const year1 = columns1[0];
+                        xlabels1.push(year1);
+                        const temp = columns1[1];
+                        ytemps1.push(temp);
+                        console.log(year1, temp);
+                    });
+                }
+            </script>
+        </div>
+        <br>
+        <!-- parte de 
+                <div class="page-chart0" style="position: relative; width: 45%">
+            <canvas id="charting" class="chartos1">
+            </canvas>
+        -->
+
+
+        <!-- Grafico Principal #########################################-->
+        <script>
+            chartIt();
+            const ytemps = [];
+            const xlabels = [];
+            async function chartIt() {
+                await getData();
+                const ctxx = document.getElementById('charting').getContext('2d');
+                const myChartx = new Chart(ctxx, {
+                    type: 'line',
+                    data: {
+                        labels: xlabels,
+                        datasets: [{
+                            label: 'Ingresos este año',
+                            data: ytemps,
+                            backgroundColor: '#fff',
+                            borderColor: [
+                                'rgba(10, 40, 180)',
+                            ],
+
+                            borderWidth: 3
+                        }],
+                        options: {
+                            responsive: true,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    },
+                });
+            }
+            getData();
+
+            async function getData() {
+                const response = await fetch('datasheet0.csv');
+                const data = await response.text();
+
+                const table = data.split('\n').slice(1);
+                table.forEach(row => {
+                    const columns = row.split(',');
+                    const year = columns[0];
+                    xlabels.push(year);
+                    const temp = columns[1];
+                    ytemps.push(temp);
+                    //console.log(year, temp);
+                });
+            }
+        </script>
+    </div>
+    </div>
+    <!-- Canvas en Botones colocados. Si los Eliminas Se rompe todo mychart0.js por ahora.-->
+    <!-- Scripts usados-->
+    <script src="chart.js"></script>
+    <script src="mychart0.js"></script>
+    <!-- Datos a Chartjs-->
+</body>
+
+</html>

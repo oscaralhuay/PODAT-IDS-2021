@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- FAVICON WEB-->
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <!-- FUENTES GOOGLE IDIOMAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/f80991af51.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="students.css">
+    <title>Importe </title>
+</head>
+
+<body>
+    <form action="./procesaform.php" class="form-register" method="POST" enctype="multipart/form-data">
+        <!-- Al tener listo la BdD añadir method="POST" enctype="multipart/form-data"-->
+        <h1 class="form__title"> Importar archivos </h1>
+        <div class="container--flex">
+            <label for="" class="form__label">Materia &nbsp; <i class="far fa-calendar-alt"></i></label>
+            <select id="list" class="form__labelb" onchange="getSelectValue();" name="txt" required>
+                <option></option>
+                <option value="Redes neuronales"> Redes neuronales</option>
+                <option value="Inteligencia Artificial"> Inteligencia Artificial</option>
+                <option value="Electronica I"> Electronica I</option>
+                <option value="Electronica II"> Electronica II</option>
+                <option value="PROYECTO FINAL"> PROYECTO FINAL</option>
+            </select>
+        </div>
+        <div class="container--flex">
+            <label for="" class="form__label">Año &nbsp; <i class="fas fa-clipboard-list"></i> &nbsp;<i
+                    class="fas fa-clipboard-check"></i></label>
+            <select id="list" class="form__labelb" onchange="getSelectValue();" name="txtAño" required>
+                <option></option>
+                <option value="Primer año">Primer año</option>
+                <option value="Segundo año">Segundo año</option>
+                <option value="Tercer año">Tercer año</option>
+                <option value="Cuarto año">Cuarto año</option>
+                <option value="Extra">Quinto año</option>
+            </select>
+        </div>
+        <div class="container--flex">
+            <label for="" class="form__label">Comisión &nbsp; <i class="fas fa-clipboard-list"></i> &nbsp;<i
+                    class="fas fa-clipboard-check"></i></label>
+            <select id="list" class="form__labelb" onchange="getSelectValue();" name="txtCom" required>
+                <option></option>
+                <option value="Mañana">Mañana</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noche">Noche</option>
+            </select>
+        </div>
+        <div class="container--flex">
+            <label for="" class="form__label">Fecha de ingreso</label>
+            <input id="date" type="date" class="form__input" name="fecha" required>
+            <script type="text/javascript">
+                Date.prototype.toDateInputValue = (function () {
+                    var local = new Date(this);
+                    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+                    return local.toJSON().slice(0, 10);
+                });
+                document.getElementById('date').value = new Date().toDateInputValue();
+            </script>
+        </div>
+        <br>
+        <div>
+            <br>
+            <input type="file" id="fileUpload" name="archivo">
+            <span id="customButton">Seleccionar Archivo</span>
+            <br>
+            <br>
+            <span id="fileName" style="font-weight:bold; border-block: 1px rgba(0, 0, 0, 0.200) solid;"></span>
+            <script>
+                document.getElementById("customButton").addEventListener("click", function () {
+                    document.getElementById("fileUpload").click();
+                });
+
+                document.getElementById("fileUpload").addEventListener("change", function () {
+                    var fullPath = this.value;
+                    var fileName = fullPath.split(/(\\|\/)/g).pop();
+                    document.getElementById("fileName").innerHTML = fileName; // display the file name
+                }, false);
+            </script>
+        </div>
+        <div class="container--flexb">
+            <label for="" class="form__labelbb">Observación&nbsp;&nbsp;</label>
+            <textarea name="comentario" id="Observación" cols="30" rows="5"
+                style="font-family:sans-serif;font-size:1.2em; position: relative;"></textarea>
+        </div>
+        <div class="container--flex">
+            <input type="submit" class="form__submitf" name="submit" onclick="">
+        </div>
+    </form>
+    <script>
+        function getSelectValue() {
+            var selectedValue = document.getElementById("list").value;
+            console.log(selectedValue);
+        }
+    </script>
+</body>
+
+</html>
+
+
+<!--             <script>
+                let form = document.getElementsByTagName("form")[0];
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    alert("Carga Exitosa!");
+                    setTimeout(() => {
+                        location.replace('./dash.html');
+                    }, 200);
+                });
+            </script>
+-->
+<!-- https://www.youtube.com/watch?v=5g0uqXIARFs&ab_channel=J%26GProyectosWeb -->

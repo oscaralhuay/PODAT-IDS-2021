@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --login-bg:#f8f3ff;
+    --title-bg: #9089cc;
+    --button-bg: rgb(60,100,150);
+    --light-pink: rgb(255, 135, 80);
+    --image-bg:  whitesmoke ;
+}
+
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-image: linear-gradient(to top, rgba(255,208,76,1) 12%, rgba(255,110,85,1) 39%, rgba(70,140,200,1) 64%, rgba(60,100,150,1) 100%);
+}
+
+.login-container {
+    zoom:0.7;
+    height: 43.75em;
+    width: 80em;
+    margin: 12em auto;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    animation: mymove 10s infinite;
+}
+.login-container:hover{
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    animation: rainbow 3s infinite;
+    box-shadow: gray 1px 10px 20px;
+
+}
+.login-info-container {/*contenedor principal*/
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 0.5rem;
+    background-color: var(--image-bg);/*fondo de contenedor principal*/
+}
+
+.image-container {/*la imagen*/
+    padding: 2rem;
+    width: 50%;
+    background-color: whitesmoke;/*fondo de la imagen*/
+    box-sizing: border-box;
+}
+
+.title {/*titulo PODAT LOGIN*/
+    text-transform: capitalize;
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgb(70,140,200);
+}
+
+.social-login {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+.social-login-element { 
+    width: 12.5rem;
+    height: 3.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    border: 1px solid var(--button-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.social-login-info{ 
+    animation: fadeIn 2s;
+    opacity: 1;
+}
+
+/*Primer social login*/
+.social-login-info p{ 
+    animation: fadeIn 2s;
+    opacity: 1;
+    width: 12.5rem;
+    font-size: 1.2rem;
+    font-weight: 1000;
+}
+.social-login-element img {
+    width: 1.875rem;
+    height: 1.875rem;
+    position: relative;
+    top: 0;
+    left: 0.5rem;
+}
+.social-getOut-element { 
+    width: 12.5rem;
+    height: 3.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    border: 1px solid var(--button-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#logout{
+        width: 12.5rem;
+    height: 3.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    border: 1px solid var(--button-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-login-element:hover {/*puntero*/
+    background-color: #fff;
+}
+
+.login-info-container > p {/*parrafo Or*/
+    font-size: 1.25em;
+    margin-top: 1.5em;
+}
+
+.inputs-container {/*contenedor inferior entero*/
+    height: 35%;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input, .btn {/*las cajitas input y el boton enviar*/
+    width: 90%;
+    height: 3.125rem;
+    font-size: 1em;
+}
+
+.input {/* solo las cajitas input*/
+    height: 15%;
+    padding-left: 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+}
+
+.input:hover {/*al pasar el puntero por las cajita cambiara de color los bordes a violeta*/
+    border: 2px solid var(--button-bg);
+}
+
+.btn {/*botón login*/
+    width: 80%;
+    line-height: 300%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-bg);
+    cursor: pointer;/*la manito cuando se pasa por login*/
+    text-decoration: none;
+    color: #ffffff;
+}
+.inputs-container p {
+    margin: 0;
+}
+
+.register {/*es el click aqui y el sing up*/
+    color: var(--light-pink);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/*hasta aca diseño*/
+
+
+
+@media screen and (max-width: 1000px) {/*para que sea responsive cuando se achica la pantalla, a partir de 1000 px se aplica esto */
+    .login-container {
+        width: 70%;
+        margin-top: 3rem;
+    }
+    .login-info-container {
+        width: 100%;
+        border-radius: 5px;
+    }
+    
+    .image-container {
+        display: none;
+    }  
+}
+
+@media screen and (max-width: 650px) {/*hacer la pantalla mas pequeña*/
+    .login-container {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .login-container {
+        height: 90%;
+    }
+
+    .social-login {
+        flex-direction: column;
+        align-items: center;
+        height: 30%;
+    }
+
+    .login-info-container > p {
+        margin: 0;
+    }
+}
+@keyframes mymove {
+    50% {box-shadow: 1px 20px 30px whitesmoke;}
+  }
+  @keyframes rainbow {
+    0% {box-shadow: 1px 10px 30px#ff0000;}
+    10% {box-shadow: 1px 10px 30px#ff8000;}
+    20% {box-shadow: 1px 10px 30px #ffff00;}
+    30% {box-shadow: 1px 10px 30px#80ff00;}
+    40% {box-shadow: 1px 10px 30px#00ff00;}
+    50% {box-shadow: 1px 10px 30px#00ff80;}
+    60% {box-shadow: 1px 10px 30px#00ffff;}
+    70% {box-shadow: 1px 10px 30px#0080ff;}
+    80% {box-shadow: 1px 10px 30px#0000ff;}
+    90% {box-shadow: 1px 10px 30px#8000ff;}
+    100% {box-shadow: 1px 10px 30px#ff0080;}
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+           opacity: 1;
+        }
+      }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- FAVICON WEB-->
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <!-- FUENTES GOOGLE IDIOMAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/f80991af51.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="students.css">
+    <title>Notas</title>
+</head>
+
+<body>
+    <form action="./dash.html" class="form-register" > <!-- Al tener listo la BdD añadir method="POST" enctype="multipart/form-data"-->
+        <h1 class="form__title"> Carga de notas </h1>
+        <div class="container--flex">
+            <label for="" class="form__label">Materia &nbsp; <i class="far fa-calendar-alt"></i></label>
+            <select id="list" class="form__labelb" onchange="getSelectValue();" required>
+                <option></option>
+                <option value="mat1"> Redes neuronales</option>
+                <option value="mat2"> Inteligencia Artificial</option>
+                <option value="mat3"> Electronica I</option>
+                <option value="mat4"> Electronica II</option>
+                <option value="mat5"> PROYECTO FINAL</option>
+            </select>
+        </div>
+        <div class="container--flex">
+            <label for="" class="form__label">Evaluación &nbsp; <i class="fas fa-clipboard-list"></i> &nbsp;<i
+                    class="fas fa-clipboard-check"></i></label>
+            <select id="list" class="form__labelb" onchange="getSelectValue();" required>
+                <option></option>
+                <option value="PrimRec">Primer Recuperatorio</option>
+                <option value="Segu">Segundo Parcial</option>
+                <option value="SeguRec">Segundo Recuperatorio</option>
+                <option value="ExaFin">EXAMEN FINAL</option>
+                <option value="Extra">EXAMENES LIBRES</option>
+            </select>
+            <input type="hidden" id="list" class="form__inputb" name="año"> Nota &nbsp;<i class="fas fa-sort-numeric-up"></i>&nbsp;
+            <select id="list" class="form__labelcc" onchange="getSelectValue();" required>
+                <option></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="container--flexb">
+            <label for="" class="form__labelbb">Observación&nbsp;&nbsp;</label>
+            <textarea name="comentario" id="Observación" cols="30" rows="5" style="font-family:sans-serif;font-size:1.2em; position: relative;"></textarea>
+        </div>
+        <div class="container--flex">
+            <label for="" class="form__label">Fecha de ingreso</label>
+            <input type="date" class="form__input" name="fecha" required>
+        </div>
+        <div class="container--flex">
+            <div class="form__container"> 
+                <label for="" class="form__labeld">Alumno: &nbsp;</label>
+                <select id="list" class="form__labeldd" onchange="getSelectValue();" required>
+                    <option></option>
+                    <option value="1">Pablo</option>
+                    <option value="2">Hernan</option>
+                    <option value="3">Centurion</option>
+                    <option value="4">Prometeo</option>
+                    <option value="5">Francisco</option>
+                    <option value="6">Juan</option>
+                    <option value="7">Carlos</option>
+                    <option value="8">Matias</option>
+                    <option value="9">Elisa</option>
+                    <option value="10">Margaret</option>
+                </select>
+            </div>
+        </div>
+        <div class="container--flex">
+            <input type="submit" class="form__submitf"> <!-- Aqui habia un ingreso de archivos en desuso <input type="file" name="archivo" class="form__file" required>-->
+            <script>
+                let form = document.getElementsByTagName("form")[0];
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    alert("Carga Exitosa!");
+                    setTimeout(() => {
+                        location.replace('./dash.html');
+                    }, 200);
+                });
+            </script>
+        </div>
+    </form>
+    <script>
+        function getSelectValue() {
+            var selectedValue = document.getElementById("list").value;
+            console.log(selectedValue);
+        }
+    </script>
+</body>
+
+</html>
+
+
+<!-- https://www.youtube.com/watch?v=5g0uqXIARFs&ab_channel=J%26GProyectosWeb -->
