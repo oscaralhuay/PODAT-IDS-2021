@@ -1,0 +1,94 @@
+<!-- import -->
+<option value="Redes neuronales"> Redes neuronales</option>
+<option value="Inteligencia Artificial"> Inteligencia Artificial</option>
+<option value="Electronica I"> Electronica I</option>
+<option value="Electronica II"> Electronica II</option>
+<option value="PROYECTO FINAL"> PROYECTO FINAL</option>
+
+<option value="Primer año">Primer año</option>
+<option value="Segundo año">Segundo año</option>
+<option value="Tercer año">Tercer año</option>
+<option value="Cuarto año">Cuarto año</option>
+<option value="Extra">Quinto año</option>
+
+<option value="Mañana">Mañana</option>
+<option value="Tarde">Tarde</option>
+<option value="Noche">Noche</option>
+
+<!-- importdata.php data show-->
+<?php
+
+$ruta = "archivos_recibidos/" . $_FILES['archivo']['name'];
+if (move_uploaded_file($_FILES['archivo']['tmp_name'], $ruta)) {
+    echo "Exito! <br>";
+} else {
+    echo "<p style='color:crimson; background-color:#cacaca'>No alarmarse pero Error! Archivo no seleccionado o perdido :( </p> <br>";
+}
+
+echo "<b> Identificación del archivo: </b> <br>";
+echo $_FILES['archivo']['name'];
+echo "<br>";
+echo $_FILES['archivo']['type'];
+echo "<br>";
+echo $_FILES['archivo']['size'];
+echo " bytes <br>";
+echo $_FILES['archivo']['tmp_name'];
+echo "<br> <br>";
+
+echo '<b> Identificación del Formulario: </b> <br>';
+
+if (isset($_POST['submit'])) {
+    if (!empty($_POST['txt'])) {
+        $selected = $_POST['txt'];
+        echo 'You have chosen: ' . $selected;
+    } else {
+        echo 'Please select the value.';
+    }
+}
+if (isset($_POST['submit'])) {
+    if (!empty($_POST['txtAño'])) {
+        $selected = $_POST['txtAño'];
+        echo ' <br>You have chosen: ' . $selected;
+    } else {
+        echo 'Please select the value.';
+    }
+}
+if (isset($_POST['submit'])) {
+    if (!empty($_POST['txtCom'])) {
+        $selected = $_POST['txtCom'];
+        echo ' <br>You have chosen: ' . $selected;
+    } else {
+        echo 'Please select the value.';
+    }
+}
+if (isset($_POST['submit'])) {
+    if (!empty($_POST['fecha'])) {
+        $selected = $_POST['fecha'];
+        echo ' <br>You have chosen: ' . $selected;
+    } else {
+        echo 'Please select the value.';
+    }
+}
+
+?>
+
+
+if (mysqli_connect_errno()) {
+echo '<script>
+    alert("Error fatal de conexión a Servidor, Base de datos fuera de alcance o Base de datos inexistente.")
+</script>';
+}
+?>
+
+//errores:
+Warning: Undefined array key "files" in C:\www\htdocs\dashboard\importdata.php on line 31
+
+Warning: Trying to access array offset on value of type null in C:\www\htdocs\dashboard\importdata.php on line 31
+
+Warning: Undefined array key "access_token" in C:\www\htdocs\dashboard\importdata.php on line 42
+
+Warning: Undefined variable $conex in C:\www\htdocs\dashboard\importdata.php on line 44
+
+Fatal error: Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in
+C:\www\htdocs\dashboard\importdata.php:44 Stack trace: #0 C:\www\htdocs\dashboard\importdata.php(44): mysqli_query(NULL,
+'INSERT INTO imp...') #1 {main} thrown in C:\www\htdocs\dashboard\importdata.php on line 44

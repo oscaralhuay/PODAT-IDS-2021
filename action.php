@@ -1,68 +1,47 @@
 <?php
-//Size Folder Comparator and Selector
-function format_folder_size($size)
-{
- if ($size >= 1073741824)
- {
-  $size = number_format($size / 1073741824, 2) . ' GB';
- }
-    elseif ($size >= 1048576)
-    {
-        $size = number_format($size / 1048576, 2) . ' MB';
-    }
-    elseif ($size >= 1024)
-    {
-        $size = number_format($size / 1024, 2) . ' KB';
-    }
-    elseif ($size > 1)
-    {
-        $size = $size . ' bytes';
-    }
-    elseif ($size == 1)
-    {
-        $size = $size . ' byte';
-    }
-    else
-    {
-        $size = '0 bytes';
-    }
- return $size;
-}
-//Size Folder finder
-function get_folder_size($folder_name)
-{
- $total_size = 0;
- $file_data = scandir($folder_name);
- foreach($file_data as $file)
- {
-  if($file === '.' or $file === '..')
-  {
-   continue;
-  }
-  else
-  {
-   $path = $folder_name . '/' . $file;
-   $total_size = $total_size + filesize($path);
-  }
- }
- return format_folder_size($total_size);
-}
+//Session
+include('config.php');
+$login_button = '';
+//Token
+if (isset($_GET["code"])) {
+    $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
+    if (!isset($token['error'])) {
 
+        $google_client->setAccessToken($token['access_token']);
+
+        $_SESSION['access_token'] = $token['access_token'];
+
+        $google_service = new Google_Service_Oauth2($google_client);
+
+        $data = $google_service->userinfo->get();
+
+        if (!empty($data['given_name'])) {
+            $_SESSION['user_first_name'] = $data['given_name'];
+        }
+
+        if (!empty($data['email'])) {
+            $_SESSION['user_email_address'] = $data['email'];
+        }
+
+        if (!empty($data['gender'])) {
+            $_SESSION['user_gender'] = $data['gender'];
+        }
+    }
+}
+$token1 = trim($_SESSION['user_email_address']);
+//Size Folder Comparator and Selector
 if(isset($_POST["action"]))
 {
  if($_POST["action"] == "fetch")
  {
-  $folder = array_filter(glob('*'), 'is_dir');
-  
-  $output = '
-   ';
+  $folder = array_filter(glob('bandejadearchivos/'.$token1), 'is_dir');
+  $output = '';
   if(count($folder) > 0)
   {
    foreach($folder as $name)
    {
     $output .= '
      <tr><!--Lista de Archivos-->
-     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       <td><button type="button" name="view_files" data-name="'.$name.'" class="view_files btn btn-default btn-xs">Ver archivos</button></td>
      </tr>';
    }
@@ -101,10 +80,10 @@ if(isset($_POST["action"]))
    {
     $path = $_POST["folder_name"] . '/' . $file;
     $output .= '
-    <tr>
-     <td><h1>&nbsp&nbsp&nbsp<i class="fas fa-chart-bar" style="color:#ffffff;"></i> </h1> </td>
-     <td style ="color:white" draggable="true" data-folder_name="'.$_POST["folder_name"].'"  data-file_name = "'.$file.'" class="change_file_name">'.$file.'</td>
-     <td><button name="remove_file" class="remove_file btn btn-danger btn-xs" id="'.$path.'">Eliminar fichero</button></td>
+    <tr >
+     <td><h1>&nbsp&nbsp<i class="fas fa-chart-bar" style="color:#ffffff;"></i> </h1> </td>
+     <td style ="color:white; max-width:200px; padding:10px" draggable="true" data-file_name = "'.$file.'" class="change_file_name">'.$file.'</td>
+     <td><button name="remove_file" class="remove_file btn btn-danger btn-xs" id="'.$path.'">Eliminar fichero</button> </td>
     </tr>
     ';
    }
@@ -121,7 +100,7 @@ if(isset($_POST["action"]))
    echo 'Archivo ELIMINADO';
   }
  }
- 
+ //Cambiar Nombre
  if($_POST["action"] == "change_file_name")
  {
   $old_name = $_POST["folder_name"] . '/' . $_POST["old_file_name"];

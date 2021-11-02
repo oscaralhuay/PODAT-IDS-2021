@@ -1,49 +1,45 @@
 <?php
 //Incluye la configuración de sesión
 include('config.php');
-
 $login_button = '';
 //Token
 if (isset($_GET["code"])) {
 
-    $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
-    if (!isset($token['error'])) {
+  $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
+  if (!isset($token['error'])) {
 
-        $google_client->setAccessToken($token['access_token']);
+    $google_client->setAccessToken($token['access_token']);
 
-        $_SESSION['access_token'] = $token['access_token'];
+    $_SESSION['access_token'] = $token['access_token'];
 
-        $google_service = new Google_Service_Oauth2($google_client);
+    $google_service = new Google_Service_Oauth2($google_client);
 
-        $data = $google_service->userinfo->get();
+    $data = $google_service->userinfo->get();
 
-        if (!empty($data['given_name'])) {
-            $_SESSION['user_first_name'] = $data['given_name'];
-        }
-
-        if (!empty($data['family_name'])) {
-            $_SESSION['user_last_name'] = $data['family_name'];
-        }
-
-        if (!empty($data['email'])) {
-            $_SESSION['user_email_address'] = $data['email'];
-        }
-
-        if (!empty($data['gender'])) {
-            $_SESSION['user_gender'] = $data['gender'];
-        }
-
-        if (!empty($data['picture'])) {
-            $_SESSION['user_image'] = $data['picture'];
-        }
+    if (!empty($data['given_name'])) {
+      $_SESSION['user_first_name'] = $data['given_name'];
     }
+
+    if (!empty($data['family_name'])) {
+      $_SESSION['user_last_name'] = $data['family_name'];
+    }
+
+    if (!empty($data['email'])) {
+      $_SESSION['user_email_address'] = $data['email'];
+    }
+
+    if (!empty($data['gender'])) {
+      $_SESSION['user_gender'] = $data['gender'];
+    }
+
+    if (!empty($data['picture'])) {
+      $_SESSION['user_image'] = $data['picture'];
+    }
+  }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <!-- JQUERY-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -64,17 +60,12 @@ if (isset($_GET["code"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UTN FRD</title>
 </head>
-
-<body >
+<body>
   <section class="home">
     <!-- Sección total-->
-    <div class="wrapper">
+    <sidebar class="wrapper">
       <!-- Sección Perfil-->
-      <div class="sidebar" id="sidebar" style="display:block">
-        <h1 style="color:#ffffff; cursor:pointer"> &nbsp;<i id="logoutpls" class="fas fa-sign-out-alt"></i></h1>
-        <div id="userD">
-          <!-- Aca va el usuario -->
-        </div>
+      <div class="sidebar" id="sidebar" style="display:block; max-height:650px; max-width:650px; min-height:1350px">
         <div class="table-responsive" id="folder_table">
         </div>
         <div id="filelistModal">
@@ -86,7 +77,7 @@ if (isset($_GET["code"])) {
                 <!--Lista de Archivos-->
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="display:none">Cerrar</button>
               </div>
             </div>
           </div>
@@ -94,24 +85,24 @@ if (isset($_GET["code"])) {
         <div id="ih">
         </div>
       </div>
-    </div>
+</sidebar>
     <div class="sidebarT">
-      <h2><i class="fas fa-user" onclick="closeIt()" style="-webkit-appearance: none;border-radius: 10px;border:none; box-shadow:1px 2px 3px black; cursor:pointer; background-color: azure; border:1px solid #000000; color:#000000; position:static; padding: 10px;"></i>
+      <h2><i class="fas fa-folder-open" onclick="closeIt()" style="-webkit-appearance: none;border-radius: 10px;border:none; box-shadow:1px 2px 3px black; cursor:pointer; background-color: azure; border:1px solid #000000; color:#000000; position:static; padding: 10px;"></i>
       </h2>
     </div>
     <section class="home">
       <div class="flexible" id="flexiblef">
         <!-- Selección Principal-->
         <div class="flexible11">
-          <b><a href="import.html"> Importe de:<br> Archivos <i class="far fa-paper-plane"></i></a></b>
+          <b><a href="https://podat.herokuapp.com/import.php"> Importe de:<br> Archivos <i class="far fa-paper-plane"></i></a></b>
         </div>
         <br>
         <div class="flexible11">
-          <b><a href="students.html"> Ingreso de:<br> Datos de Alumno <i class="fas fa-graduation-cap"></i></a></b>
+          <b><a href="students.php"> Ingreso de:<br> Datos de Alumno <i class="fas fa-graduation-cap"></i></a></b>
         </div>
         <br>
         <div class="flexible11">
-          <b><a href="roles.html"> Asignaciòn de:<br> Rol <i class="fas fa-hand-sparkles"></i></a></b>
+          <b><a href="roles.php"> Asignaciòn de:<br> Rol <i class="fas fa-hand-sparkles"></i></a></b>
         </div>
         <div class="flexible111">
           <h1> Topicos relevantes</h1>
@@ -121,68 +112,16 @@ if (isset($_GET["code"])) {
           <div class="box1"> <a href="#"> Regular </a></div>
           <div class="box2"> <a href="#"> Totales </a></div>
         </div>
-        <div class="flexible2" style="display:none">
+        <div class="flexible2" style="display:block">
 
           <h2> VISITAS RECIENTES:</h2> <br>
           <!-- Graficos en linea-->
-          <div class="inLine">
+          <div class="inLine" style="display:block">
             <canvas id="charting" class="chartos1">
             </canvas>
-            <!-- Grafico Principal #########################################-->
-            <script>
-              chartIt();
-              const ytemps = [];
-              const xlabels = [];
-              async function chartIt() {
-                await getData();
-                const ctxx = document.getElementById('charting').getContext('2d');
-                const myChartx = new Chart(ctxx, {
-                  type: 'line',
-                  data: {
-                    labels: xlabels,
-                    datasets: [{
-                      label: 'Ingresos totales por fecha',
-                      data: ytemps,
-                      backgroundColor: '#cacaca',
-                      borderColor: [
-                        'rgba(50, 100, 150, 1)',
-                      ],
-                      borderWidth: 3
-                    }],
-                    options: {
-                      scales: {
-                        yAxes: [{
-                          ticks: {
-                            beginAtZero: true
-                          }
-                        }]
-                      }
-                    }
-                  },
-                });
-              }
-              getData();
 
-              async function getData() {
-                const response = await fetch('./datasheets in csv/total.csv');
-                const data = await response.text();
-
-                const table = data.split('\n').slice(1);
-                table.forEach(row => {
-                  const columns = row.split(',');
-                  const year = columns[0];
-                  xlabels.push(year);
-                  const temp = columns[1];
-                  ytemps.push(temp);
-                });
-              }
-            </script>
-            <!--       #########################################-->
-          </div>
           <br>
-          <!-- Materias-->
-          <!-- Añadir Materias luego, y reemplazar sus datos por un Archivo CSV Modificable
-            <div class="categories0">
+            <div class="categories0" style="display:none">
               <a class="hideDisplay">Materias<i class="fas fa-chevron-right"></i>
               <span class="showDisplayOnHover">
                 <div class="chart-container" style="position: relative; height: 50vh; width: 25vw">
@@ -228,40 +167,52 @@ if (isset($_GET["code"])) {
             </a>
             <br>
           </div>
-            
-            -->
         </div>
       </div>
     </section>
-    <section class="home1" style="display:none">
+    <section class="home1" style="display:block">
+      <div id="userD" class="profileCard">
+        <!-- Aca va el usuario -->
+        <?php
+        if ($login_button == '') {
+          echo '<div class="card-header">';
+          echo '</br>';
+          echo '<a href="logout.php" style="color:#ffffff; cursor:pointer"> <h1>&nbsp;<i id="logoutpls" class="fas fa-sign-out-alt"></h1></i></a>';
+          echo '<img style="margin-left:27%; border-radius:50%; border: 2px solid rgb(20, 50, 100);" src="' . $_SESSION["user_image"] . '" class="rounded-circle container"/>';
+          echo '<h3 style="color:white; margin-left:10%;"><b>Name :</b> ' . $_SESSION['user_first_name'] . ' ' . $_SESSION['user_last_name'] . '</h3>';
+          echo '<h3 style="color:white; margin-left:10%;"><b>Email :</b> ' . $_SESSION['user_email_address'];
+        }
+        ?>
+      </div>
       <!-- Section Quick View-->
-      <div class="inLine1">
+      <div class="inLine1" style="display:block">
         <div class="flexible12" onclick="toggleGraph()">
           <b><a href="#"> Enero a Mayo</i></a></b>
         </div>
         <div class="inLineCanvas">
-          <canvas id="charting1" class="chartosR" style="height: 100px">
+          <canvas id="charting1" class="chartosR" style="width: 380px">
           </canvas>
 
         </div>
 
       </div>
-      <div class="inLine1">
+      <div class="inLine1" style="display:block">
         <div class="flexible12" onclick="toggleGraph1()">
           <b><a href="#"> Junio a Agosto</i></a></b>
         </div>
         <div class="inLineCanvas">
-          <canvas id="charting2" class="chartosR">
+          <canvas id="charting2" class="chartosR" style="width: 380px">
           </canvas>
         </div>
       </div>
-      <div class="inLine1">
+      <div class="inLine1" style="display:block">
         <div class="flexible12" onclick="toggleGraph2()">
           <b><a href="#"> Septiembre a Diciembre</i></a></b>
         </div>
         <div class="inLineCanvas">
-          <canvas id="charting3" class="chartosR">
+          <canvas id="charting3" class="chartosR" style="width: 380px">
           </canvas>
+
         </div>
       </div>
     </section>
@@ -270,6 +221,7 @@ if (isset($_GET["code"])) {
       <!-- firebase base-->
       <!-- Scripts usados-->
       <script src="chart.js"></script>
+      <script src="mychart0.js"></script>
       <!-- Config Defecto Chart.js-->
       <script>
         Chart.defaults.font.family = "Calibri";
@@ -278,49 +230,6 @@ if (isset($_GET["code"])) {
       <!-- Datos a Chartjs por codigo HARD CODE <script src="./mychart0.js"></script>-->
 
       <script type="module">
-        //Datos de Firebase
-        document.getElementById('userD').addEventListener('click', goog)
-        import {
-          initializeApp
-        } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-        import {
-          getAnalytics
-        } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyDNLW7ZztWhvGeIF9Zx5a9x4aXaGyUpjtQ",
-          authDomain: "dashboardhehe.firebaseapp.com",
-          projectId: "dashboardhehe",
-          storageBucket: "dashboardhehe.appspot.com",
-          messagingSenderId: "307725797015",
-          appId: "1:307725797015:web:47da37b235452eada58bd2",
-          measurementId: "G-MS3VBLKH9G"
-        }
-        window.onload = showUserDetails;
-
-        function showUserDetails(user) {
-          var element = document.getElementById('ih'); // will return element
-          document.getElementById('userD').innerHTML = `
-          <div id="ih"class="sidebarTitle" >
-            <img src="${user.photoURL}" style ="border-radius: 100px; border: 1px solid rgba(60,100,150,1);">
-            <p>Usuario: <br > <p style="background-color: rgba(60,100,150,1); "> ${user.displayName} </p></p> 
-            <p>Tu email: <br><p style="background-color: rgba(60,100,150,1); ">${user.email} </p></p>
-            </div>
-            `
-        }
-        firebase.initializeApp(firebaseConfig);
-        let provider = new firebase.auth.GoogleAuthProvider()
-
-        function goog() {
-          console.log('Login btn call')
-          firebase.auth().signInWithPopup(provider).then(res => {
-            showUserDetails(res.user)
-          })
-        }
       </script>
       <script>
         $(document).ready(function() {
@@ -340,39 +249,6 @@ if (isset($_GET["code"])) {
               }
             });
           }
-
-          $(document).on('click', '#create_folder', function() {
-            $('#action').val("create");
-            $('#folder_name').val('');
-            $('#folder_button').val('Crear');
-            $('#folderModal').modal('show');
-            $('#old_name').val('');
-            $('#change_title').text("Crear Carpeta");
-          });
-
-          $(document).on('click', '#folder_button', function() {
-            var folder_name = $('#folder_name').val();
-            var old_name = $('#old_name').val();
-            var action = $('#action').val();
-            if (folder_name != '') {
-              $.ajax({
-                url: "action.php",
-                method: "POST",
-                data: {
-                  folder_name: folder_name,
-                  old_name: old_name,
-                  action: action
-                },
-                success: function(data) {
-                  $('#folderModal').modal('hide');
-                  load_folder_list();
-                  alert(data);
-                }
-              });
-            } else {
-              alert("Enter Folder Name");
-            }
-          });
 
           $(document).on('click', '.view_files', function() {
             var folder_name = $(this).data("name");
@@ -415,8 +291,9 @@ if (isset($_GET["code"])) {
       </script>
       <script>
         function logout() {
-          location.replace("./logindex.html");
+          location.replace("./index.php");
         }
+
         function closeIt() {
           var x = document.getElementById("sidebar");
           if (x.style.display === "none") {
@@ -426,9 +303,6 @@ if (isset($_GET["code"])) {
           }
         }
       </script>
-      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
     </div>
 </body>
 
