@@ -105,7 +105,7 @@ if (isset($_GET["code"])) {
           <b><a href="roles.php"> Asignaciòn de:<br> Rol <i class="fas fa-hand-sparkles"></i></a></b>
         </div>
         <div class="flexible111">
-          <h1> Topicos relevantes</h1>
+          <h1> Topicos relevantes MUY MUUUUY</h1>
         </div>
         <div class="topics">
           <div class="box0"> <a href="#"> Inscripto </a></div>
