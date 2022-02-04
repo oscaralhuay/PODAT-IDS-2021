@@ -8,7 +8,7 @@
 section .home {
   width: 750px;
 
-  min-height: 1350px;
+  min-height: 1550px;
   display: flex;
   position: relative;
 }

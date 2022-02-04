@@ -65,7 +65,7 @@ if (isset($_GET["code"])) {
     <!-- Sección total-->
     <sidebar class="wrapper">
       <!-- Sección Perfil-->
-      <div class="sidebar" id="sidebar" style="display:block; max-height:650px; max-width:650px; min-height:1350px">
+      <div class="sidebar" id="sidebar" style="display:none; max-height:650px; max-width:650px; min-height:1550px">
         <div class="table-responsive" id="folder_table">
         </div>
         <div id="filelistModal">
@@ -119,7 +119,57 @@ if (isset($_GET["code"])) {
           <div class="inLine" style="display:block">
             <canvas id="charting" class="chartos1">
             </canvas>
+            <script>
+            chartIt();
+            const ytemps = [];
+            const xlabels = [];
+            async function chartIt() {
+                await getData();
+                const ctxx = document.getElementById('charting').getContext('2d');
+                const myChartx = new Chart(ctxx, {
+                    type: 'line',
+                    data: {
+                        labels: xlabels,
+                        datasets: [{
+                            label: 'Ingresos este año',
+                            data: ytemps,
+                            backgroundColor: '#fff',
+                            borderColor: [
+                                'rgba(10, 40, 180)',
+                            ],
 
+                            borderWidth: 3
+                        }],
+                        options: {
+                            responsive: true,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    },
+                });
+            }
+            getData();
+
+            async function getData() {
+                const response = await fetch('datasheet0.csv');
+                const data = await response.text();
+
+                const table = data.split('\n').slice(1);
+                table.forEach(row => {
+                    const columns = row.split(',');
+                    const year = columns[0];
+                    xlabels.push(year);
+                    const temp = columns[1];
+                    ytemps.push(temp);
+                    //console.log(year, temp);
+                });
+            }
+        </script>
           <br>
             <div class="categories0" style="display:none">
               <a class="hideDisplay">Materias<i class="fas fa-chevron-right"></i>
@@ -192,7 +242,70 @@ if (isset($_GET["code"])) {
         <div class="inLineCanvas">
           <canvas id="charting1" class="chartosR" style="width: 380px">
           </canvas>
+          <script>
+            function toggleGraph() {
+              var x = document.getElementById("charting1");
+              if (x.style.display === "none") {
+                x.style.display = "block";
+              } else {
+                x.style.display = "none";
+              }
+            }
+            chartIt();
+            const ytemps1 = [];
+            const xlabels1 = [];
+            async function chartIt() {
+              await getData();
+              const ctx1 = document.getElementById('charting1').getContext('2d');
+              const myChart1 = new Chart(ctx1, {
+                type: 'pie',
+                data: {
+                  labels: xlabels1,
+                  datasets: [{
+                    label: 'Ingresos',
+                    data: ytemps1,
+                    backgroundColor: [
+                      'rgba(50, 50, 100)',
+                      'rgba(45, 50, 150)',
+                      'rgba(10, 40, 200)',
+                      'rgba(0, 50, 250)',
+                      'rgba(255, 0, 0)',
+                      'rgba(200, 49, 41)',
+                      'rgba(150, 50, 20)',
+                      'rgba(59, 31, 12)',
+                    ],
+                    hoverOffset: 20,
+                    borderColor: [
+                      '#cacaca',
+                    ],
+                    borderWidth: 2
+                  }],
+                  options: {
+                    scales: {
+                      yAxes: [{
+                        ticks: {
+                          beginAtZero: true
+                        }
+                      }]
+                    }
+                  }
+                },
+              });
+            }
+            async function getData() {
+              const response = await fetch('datasheet1.csv');
+              const data = await response.text();
 
+              const table = data.split('\n').slice(1);
+              table.forEach(row => {
+                const columns1 = row.split(',');
+                const year1 = columns1[0];
+                xlabels1.push(year1);
+                const temp = columns1[1];
+                ytemps1.push(temp);
+              });
+            }
+          </script>
         </div>
 
       </div>
@@ -203,6 +316,69 @@ if (isset($_GET["code"])) {
         <div class="inLineCanvas">
           <canvas id="charting2" class="chartosR" style="width: 380px">
           </canvas>
+          <script>
+          function toggleGraph1() {
+            var x1 = document.getElementById("charting2");
+            if (x1.style.display === "none") {
+              x1.style.display = "block";
+            } else {
+              x1.style.display = "none";
+            }
+          }
+          chartIt2();
+          const ytemps2 = [];
+          const xlabels2 = [];
+          async function chartIt2() {
+            await getData2();
+            const ctx2 = document.getElementById('charting2').getContext('2d');
+            const myChart2 = new Chart(ctx2, {
+              type: 'polarArea',
+              data: {
+                labels: xlabels2,
+                datasets: [{
+                  label: 'Varones',
+                  data: ytemps2,
+                  backgroundColor: [
+                    'rgba(75, 134, 171)',
+                    'rgba(75, 101, 171)',
+                    'rgba(32, 40, 92)',
+                    'rgba(75, 0, 171)',
+                    'rgba(117, 49, 41)',
+                    'rgba(237, 47, 26)',
+                    'rgba(59, 31, 12)',
+                  ],
+                  borderColor: [
+                    '#b0b0b0',
+                  ],
+                  hoverOffset: 40,
+                  borderWidth: 2
+                }],
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              },
+            });
+          }
+          async function getData2() {
+            const response = await fetch('datasheet2.csv');
+            const data = await response.text();
+
+            const table = data.split('\n').slice(1);
+            table.forEach(row => {
+              const columns2 = row.split(',');
+              const year2 = columns2[0];
+              xlabels2.push(year2);
+              const temp = columns2[1];
+              ytemps2.push(temp);
+            });
+          }
+        </script>
         </div>
       </div>
       <div class="inLine1" style="display:block">
@@ -212,7 +388,69 @@ if (isset($_GET["code"])) {
         <div class="inLineCanvas">
           <canvas id="charting3" class="chartosR" style="width: 380px">
           </canvas>
-
+          <script>
+          function toggleGraph2() {
+            var x2 = document.getElementById("charting3");
+            if (x2.style.display === "none") {
+              x2.style.display = "block";
+            } else {
+              x2.style.display = "none";
+            }
+          }
+          chartIt3();
+          const ytemps3 = [];
+          const xlabels3 = [];
+          async function chartIt3() {
+            await getData3();
+            const ctx3 = document.getElementById('charting3').getContext('2d');
+            const myChart3 = new Chart(ctx3, {
+              type: 'doughnut',
+              data: {
+                labels: xlabels3,
+                datasets: [{
+                  label: 'Varones',
+                  data: ytemps3,
+                  backgroundColor: [
+                    'rgba(255, 234, 0)',
+                    'rgba(202, 252, 0)',
+                    'rgba(157, 179, 68)',
+                    'rgba(76, 105, 29)',
+                    'rgba(36, 80, 97)',
+                    'rgba(62, 134, 135)',
+                    'rgba(79, 168, 134)',
+                    'rgba(112, 255, 200)',
+                  ],
+                  borderColor: [
+                    '#b0b0b0',
+                  ],
+                  hoverOffset: 20,
+                  borderWidth: 2
+                }],
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              },
+            });
+          }
+          async function getData3() {
+            const response3 = await fetch('datasheet3.csv');
+            const data3 = await response3.text();
+            const table3 = data3.split('\n').slice(1);
+            table3.forEach(row => {
+              const columns3 = row.split(',');
+              const year3 = columns3[0];
+              xlabels3.push(year3);
+              const temp3 = columns3[1];
+              ytemps3.push(temp3);
+            });
+          }
+        </script>
         </div>
       </div>
     </section>

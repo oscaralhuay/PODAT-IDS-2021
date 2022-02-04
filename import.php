@@ -70,7 +70,7 @@ $options2 = mysqli_query($connect, $query2);
 <body>
     <form action="./importdata.php" class="form-register" method="POST" enctype="multipart/form-data">
         <!-- Al tener listo la BdD añadir method="POST" enctype="multipart/form-data"-->
-        <h1 class="form__title">Importar archivos<a style=" cursor:pointer" onclick="location.href = 'dash.php';"><i class="fas fa-sign-out-alt"></i></a></h1>
+        <h1 class="form__title">Importar archivos <a style=" cursor:pointer" onclick="location.href = 'dash.php';"><i class="fas fa-sign-out-alt"></i></a></h1>
         <div class="container--flex">
             <label for="" class="form__label">Materia &nbsp; <i class="far fa-calendar-alt"></i></label>
             <select id="list" class="form__labelb" onchange="getSelectValue();" name="txt" required>
